@@ -40,12 +40,12 @@ def search_test() -> None:
                     "audio": encoded_audio
                     }
             response = requests.post(SEARCH_API_URL, json=request_data)
-            assert(response.status_code == 200)
+            assert response.status_code == 200, f"FAIL:{SEARCH_API_URL=},{request_data=},{response.status_code=}"
 
     def search_400() -> None:
         request_data = {}
         response = requests.post(SEARCH_API_URL, json=request_data)
-        assert(response.status_code == 400)
+        assert response.status_code == 400, f"FAIL:{SEARCH_API_URL=},{request_data=},{response.status_code=}"
 
     def search_404() -> None:
         encoded_audio = encode_file_to_base_64(DUMMY_HUMMING_FILENAME)[2:-1]
@@ -53,7 +53,7 @@ def search_test() -> None:
                 "audio": encoded_audio
                 }
         response = requests.post(SEARCH_API_URL, json=request_data)
-        assert(response.status_code == 404)
+        assert response.status_code == 404, f"FAIL:{SEARCH_API_URL=},{request_data=},{response.status_code=}"
 
     def search_500() -> None:
         pass
@@ -74,9 +74,9 @@ def tracks_test() -> None:
                     "audio": encoded_audio,
                     }
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 201)
+            assert response.status_code == 201, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             response = requests.delete(track_url)
-            assert(response.status_code == 204)
+            assert response.status_code == 204, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
 
     def create_204() -> None:
         for track in RECORDING_FILENAMES:
@@ -89,11 +89,11 @@ def tracks_test() -> None:
                     "audio": encoded_audio,
                     }
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 201)
+            assert response.status_code == 201, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 204)
+            assert response.status_code == 204, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             response = requests.delete(track_url)
-            assert(response.status_code == 204)
+            assert response.status_code == 204, f"FAIL:{track_url=},{response.status_code=}"
 
     def create_400() -> None:
         for track in RECORDING_FILENAMES:
@@ -105,22 +105,22 @@ def tracks_test() -> None:
                     "audio": encoded_audio
                     }
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 400)
+            assert response.status_code == 400, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             request_data = {
                     "id": request_id,
                     }
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 400)
+            assert response.status_code == 400, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             malformed_track_url = f"{TRACKS_API_URL}/incorrect-id"
             request_data = {
                     "id": request_id,
                     }
             response = requests.put(malformed_track_url, json=request_data)
-            assert(response.status_code == 400)
+            assert response.status_code == 400, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
 
     def list_200() -> None:
         response = requests.get(TRACKS_API_URL)
-        assert(response.status_code == 200)
+        assert response.status_code == 200, f"FAIL:{TRACKS_API_URL=},{response.status_code=}"
 
     def read_200() -> None:
         for track in RECORDING_FILENAMES:
@@ -133,18 +133,18 @@ def tracks_test() -> None:
                     "audio": encoded_audio
                     }
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 201)
+            assert response.status_code == 201, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             response = requests.get(track_url)
-            assert(response.status_code == 200)
+            assert response.status_code == 200, f"FAIL:{track_url=},{response.status_code=}"
             response = requests.delete(track_url)
-            assert(response.status_code == 204)
+            assert response.status_code == 204, f"FAIL:{track_url=},{response.status_code=}"
 
     def read_404() -> None:
         for track in RECORDING_FILENAMES:
             encoded_id = url_escape_string(track[:-4])
             track_url = f"{TRACKS_API_URL}/{encoded_id}"
             response = requests.get(track_url)
-            assert(response.status_code == 404)
+            assert response.status_code == 404, f"FAIL:{track_url=},{response.status_code=}"
 
 
     def delete_204() -> None:
@@ -158,16 +158,16 @@ def tracks_test() -> None:
                     "audio": encoded_audio
                     }
             response = requests.put(track_url, json=request_data)
-            assert(response.status_code == 201)
+            assert response.status_code == 201, f"FAIL:{track_url=},{request_data=},{response.status_code=}"
             response = requests.delete(track_url)
-            assert(response.status_code == 204)
+            assert response.status_code == 204, f"FAIL:{track_url=},{response.status_code=}"
 
     def delete_404() -> None:
         for track in RECORDING_FILENAMES:
             encoded_id = url_escape_string(track[:-4])
             track_url = f"{TRACKS_API_URL}/{encoded_id}"
             response = requests.delete(track_url)
-            assert(response.status_code == 404)
+            assert response.status_code == 404, f"FAIL:{track_url=},{response.status_code=}"
 
     def create_500() -> None:
         pass
@@ -203,28 +203,28 @@ def cooltown_test() -> None:
                     }
 
             response = requests.put(track_url, json=tracks_request_data)
-            assert(response.status_code == 201)
+            assert response.status_code == 201, f"FAIL:{track_url=},{tracks_request_data=},{response.status_code=}"
 
             encoded_audio = encode_file_to_base_64(humming)[2:-1]
             cooltown_request_data = {
                     "audio": encoded_audio,
                     }
             response = requests.post(COOLTOWN_API_URL, json=cooltown_request_data)
-            assert(response.status_code == 200)
+            assert response.status_code == 200, f"FAIL:{COOLTOWN_API_URL=},{cooltown_request_data=},{response.status_code=}"
 
             response = requests.delete(track_url)
-            assert(response.status_code == 204)
+            assert response.status_code == 204, f"FAIL:{track_url=},{response.status_code=}"
 
     def cooltown_400() -> None:
         cooltown_request_data = {}
         response = requests.post(COOLTOWN_API_URL, json=cooltown_request_data)
-        assert(response.status_code == 400)
+        assert response.status_code == 400, f"FAIL:{COOLTOWN_API_URL=},{cooltown_request_data=},{response.status_code=}"
 
         cooltown_request_data = {
                 "audio": 12312381628736187236,
                 }
         response = requests.post(COOLTOWN_API_URL, json=cooltown_request_data)
-        assert(response.status_code == 400)
+        assert response.status_code == 400, f"FAIL:{COOLTOWN_API_URL=},{cooltown_request_data=},{response.status_code=}"
 
     def cooltown_404() -> None:
         encoded_audio = encode_file_to_base_64(DUMMY_HUMMING_FILENAME)[2:-1]
@@ -232,7 +232,7 @@ def cooltown_test() -> None:
                 "audio": encoded_audio,
                 }
         response = requests.post(COOLTOWN_API_URL, json=cooltown_request_data)
-        assert(response.status_code == 404)
+        assert response.status_code == 404, f"FAIL:{COOLTOWN_API_URL=},{cooltown_request_data=},{response.status_code=}"
 
     def cooltown_500() -> None:
         pass
