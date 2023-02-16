@@ -8,7 +8,7 @@ This repository contains the coursework for the module ECM3408 (Enterprise Compu
 
  * `tracks` - A microservice that controls access to a tracks database, consisting of an ID (track name) and Audio (base64 encoded `.wav` file);
 
- * `search` - A service that contains a client for [audd.io](https://audd.io), a music recognition software similar to [Shazam](https://www.shazam.com/gb/home);
+ * `search` - A service that contains a client for [AudD](https://audd.io), a music recognition software similar to [Shazam](https://www.shazam.com/gb/home);
 
  * `cooltown` - A "facade" service that uses the other two microservices to request a base64 encoded audio file of a hummed tune, and responds with a base64 encoded audio file of the song in question.
 
@@ -17,9 +17,9 @@ This repository contains the coursework for the module ECM3408 (Enterprise Compu
 From the repository directory, you can run the following:
 
 ```bash 
-(cd addison/tracks && go run main.go &) \ 
-(cd addison/search && go run main.go &) \ 
-(cd addison/cooltown && go run main.go &) 
+(cd addison/tracks && go run main.go) & \
+(cd addison/search && go run main.go) & \
+(cd addison/cooltown && go run main.go) &
 ```
 
 ## Testing
