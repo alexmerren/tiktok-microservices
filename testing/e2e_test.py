@@ -246,3 +246,5 @@ def main() -> None:
     search_test()
     cooltown_test()
 
+if __name__ == "__main__":
+    main()

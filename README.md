@@ -24,10 +24,15 @@ From the repository directory, you can run the following:
 
 ## Testing
 
-To test these service, the database MUST be deleted prior to running. After
-deleting the database and starting the three services, you can run the tests
-with:
+To test these service, the database MUST be empty prior to running. To test,
+run the following commands in order:
 
 ```bash 
-python3 testing/e2e_test.py
+rm addison/tracks/tracks.db
+
+(cd addison/tracks && go run main.go) & \
+(cd addison/search && go run main.go) & \
+(cd addison/cooltown && go run main.go) & 
+
+(cd testing && python3 e2e_test.py)
 ```
