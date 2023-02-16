@@ -29,10 +29,14 @@ run the following commands in order:
 
 ```bash 
 rm addison/tracks/tracks.db
+```
 
+```bash
 (cd addison/tracks && go run main.go) & \
 (cd addison/search && go run main.go) & \
 (cd addison/cooltown && go run main.go) & 
+```
 
+```bash
 (cd testing && python3 e2e_test.py)
 ```
