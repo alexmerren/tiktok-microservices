@@ -18,10 +18,11 @@ const (
 	serverTimeoutInSeconds = 5 * time.Second
 	restHost               = "localhost"
 	restPort               = 3001
+	audioApiToken          = "test"
 )
 
 func main() {
-	audioClient, err := audio.NewAuddioClient()
+	audioClient, err := audio.NewAuddioClient(audioApiToken)
 	if err != nil {
 		return
 	}

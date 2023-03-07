@@ -10,24 +10,29 @@ import (
 )
 
 const (
-	apiUrl   = "https://api.audd.io/"
-	apiToken = "eb0d785652fa7b0815bb6899de87ece3"
+	apiUrl = "https://api.audd.io/"
 )
 
 type AuddioClient struct {
-	client *http.Client
+	client   *http.Client
+	apiToken string
 }
 
-func NewAuddioClient() (*AuddioClient, error) {
+func NewAuddioClient(apiToken string) (*AuddioClient, error) {
+	if apiToken == "" {
+		return nil, errors.New("no apiToken specified")
+	}
+
 	return &AuddioClient{
-		client: http.DefaultClient,
+		client:   http.DefaultClient,
+		apiToken: apiToken,
 	}, nil
 }
 
 func (a *AuddioClient) GetTitle(audio string) (string, error) {
 	requestData := url.Values{
 		"audio":     {audio},
-		"api_token": {apiToken},
+		"api_token": {a.apiToken},
 	}
 	clientResponse, err := a.client.PostForm(apiUrl, requestData)
 	if err != nil {
